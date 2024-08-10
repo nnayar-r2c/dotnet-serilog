@@ -85,9 +85,10 @@ jobs:
       needs: restore
       name: Scan
       runs-on: ubuntu-20.04
-      if: ${{ needs.restore.outputs.has_dotnet_files == 'true' }}
+      # if: ${{ needs.restore.outputs.has_dotnet_files == 'true' }}
       env:
         SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+        HAS_DOTNET_FILES: ${{ needs.restore.outputs.has_dotnet_files == 'true' }}
       container:
         image: semgrep/semgrep
       steps:
@@ -97,6 +98,7 @@ jobs:
         with:
           name: lockfile 
       - run: |
+          echo "HAS_DOTNET_FILES: $HAS_DOTNET_FILES"
           tree 
           semgrep ci --verbose
           
