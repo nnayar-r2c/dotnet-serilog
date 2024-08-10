@@ -12,6 +12,8 @@ on:
 jobs:
   restore:
     runs-on: ubuntu-latest
+    outputs:
+      has_dotnet_files: ${{ steps.check.outputs.has_dotnet_files }}
     
     steps:
       - name: Checkout code
