@@ -83,7 +83,6 @@ jobs:
       needs: restore
       name: Scan
       runs-on: ubuntu-20.04
-      # if: ${{ needs.restore.outputs.has_dotnet_files == 'true' }}
       env:
         SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
         HAS_DOTNET_FILES: ${{ needs.restore.outputs.has_dotnet_files }}
@@ -92,6 +91,7 @@ jobs:
       steps:
       - uses: actions/checkout@v3
       - name: Download artifact from previous job
+        if: ${{ needs.restore.outputs.has_dotnet_files == 'true' }}
         uses: actions/download-artifact@v3
         with:
           name: lockfile 
